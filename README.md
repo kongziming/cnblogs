@@ -1,6 +1,6 @@
 # 博客园绿色主题
 
-说明：本主题参考了[seanhalpin](http://seanhalpin.io/)的主题，突出了简单、绿色的特点。
+说明：本主题参考了[Seán Halpin](https://dribbble.com/seanehalpin)的设计，突出了简单、绿色的特点。
 
 ## 使用方法
 
