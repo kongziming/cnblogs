@@ -1,0 +1,47 @@
+<img src="http://images.cnblogs.com/cnblogs_com/hellovenus/610587/o_green.png"  alt="Green" />
+<script>
+// 等待指定元素加载完毕，参考 https://www.cnblogs.com/52cik/p/jquery-wait.html
+jQuery.fn.wait = function (func, times, interval) {
+    var _times = times || -1,
+        _interval = interval || 20,
+        _self = this,
+        _selector = this.selector,
+        _iIntervalID;
+    if (this.length) {
+        func && func.call(this);
+    } else {
+        _iIntervalID = setInterval(function () {
+            if (!_times) {
+                clearInterval(_iIntervalID);
+            }
+            _times <= 0 || _times--;
+
+            _self = $(_selector);
+            if (_self.length) {
+                func && func.call(_self);
+                clearInterval(_iIntervalID);
+            }
+        }, _interval);
+    }
+    return this;
+}
+
+$("#comments_pager_bottom").wait(function () {
+    $(".feedbackItem").each(function () {
+        var avatar = $(this).children(".feedbackCon").children("span:last").html();
+        avatar = avatar ? avatar.replace("http://", "https://") : "https://pic.cnblogs.com/face/sample_face.gif";  //没有头像则使用默认头像
+        //console.log(avatar);
+        $('<img src="' + avatar + '" class="comment_avatar" />' + '<span class="displayarrow"/>').prependTo($(this).children(".feedbackCon"));
+    });
+})
+
+$(document).ajaxComplete(function (event, xhr, settings) {
+    // 用于留言板
+    if (window.location.pathname == "/hellovenus/p/guestboard.html") {
+        $("#sideBar").attr("style","display:none;");
+        $("#blog_post_info_block").attr("style","display:none;");
+        $(".postDesc").attr("style","display:none;");
+        $("#mainContent .forFlow").attr("style", "margin:0 auto;max-width: 1080px;");
+    }
+});
+</script>
